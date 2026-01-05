@@ -23,16 +23,13 @@
 			))
 
 			// Objects
-			for (name, coords) in objects {
-				for (x, y) in coords {
-					// CHECK: Is the name completely UPPERCASE (allowing underscores)?
+			objects.pairs().map(((name, coords)) => {
+				coords.map(((x, y)) => {
 					let is-text = name.match(regex("^[A-Z_]+$")) != none
 					
 					let content = if is-text {
-						// Render as Text
 						text(fill: white, size: cell-size * 0.35, weight: "bold", font: "Fira Code", name)
 					} else {
-						// Render as Image
 						image(sprite-dir + name + img-extension, width: 80%, fit: "contain")
 					}
 
@@ -46,8 +43,8 @@
 							align(center + horizon, content)
 						)
 					)
-				}
-			}
+				}).sum(default: [])
+			}).sum(default: [])
 		}
 	)
 }
