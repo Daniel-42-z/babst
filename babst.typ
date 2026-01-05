@@ -75,39 +75,24 @@
 
 // Generates a filled rectangle between two coordinates (inclusive)
 #let rectf(x1, y1, x2, y2) = {
-	let xs = calc.min(x1, x2)
-	let xe = calc.max(x1, x2)
-	let ys = calc.min(y1, y2)
-	let ye = calc.max(y1, y2)
+	let (xs, xe) = (calc.min(x1, x2), calc.max(x1, x2))
+	let (ys, ye) = (calc.min(y1, y2), calc.max(y1, y2))
 
-	let coords = ()
-	// range() in Typst is exclusive at the end, so we add +1
-	for x in range(xs, xe + 1) {
-		for y in range(ys, ye + 1) {
-			coords.push((x, y))
-		}
-	}
-	coords
+	range(xs, xe + 1).map(x => range(ys, ye + 1).map(y => (x, y))).sum(default: ())
 }
 
 // Generates a rectangle border between two coordinates
 #let rectb(x1, y1, x2, y2) = {
-	let xs = calc.min(x1, x2)
-	let xe = calc.max(x1, x2)
-	let ys = calc.min(y1, y2)
-	let ye = calc.max(y1, y2)
+	let (xs, xe) = (calc.min(x1, x2), calc.max(x1, x2))
+	let (ys, ye) = (calc.min(y1, y2), calc.max(y1, y2))
 
-	let coords = ()
-	for x in range(xs, xe + 1) {
-		for y in range(ys, ye + 1) {
-			// Add point if it is on any of the four edges
-			if x == xs or x == xe or y == ys or y == ye {
-				coords.push((x, y))
-			}
-		}
-	}
-	coords
+	range(xs, xe + 1)
+		.map(x => range(ys, ye + 1)
+		.filter(y => x == xs or x == xe or y == ys or y == ye)
+		.map(y => (x, y)))
+		.sum(default: ())
 }
+
 
 // Generates a vertical stack of text strings, centered vertically relative to a single line of text.
 // Useful for Baba Is You text stacks (e.g. "BABA IS MELT\nSHIFT").
