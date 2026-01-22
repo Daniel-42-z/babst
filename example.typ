@@ -71,6 +71,12 @@
 
 #set page(flipped: true)
 
+#text(size: 24pt)[#align(center)[
+	BEGIN SPOILER
+]]
+
+#pagebreak()
+
 == Hard Level (2 points)
 
 #align(center)[
@@ -117,6 +123,12 @@
 		)
 	)
 ]
+
+#pagebreak()
+
+#text(size: 24pt)[#align(center)[
+	END SPOILER
+]]
 
 #pagebreak()
 
